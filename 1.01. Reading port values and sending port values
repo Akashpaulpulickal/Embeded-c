@@ -1,0 +1,28 @@
+ Program to read the number 1 from port 1, number 2 from port 2 , then add them ,store the result ,send it to Port 3
+
+
+#include<reg.51.h>
+void main()
+{
+unsigned char a,b,c ; 
+P1 = 0XFF ;     //make port 1 as input port 
+P2 = 0XFF ;     //make port 2 as input port 
+a=P1;
+b=P2;
+c= a+b ;
+P3= c;
+}
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
