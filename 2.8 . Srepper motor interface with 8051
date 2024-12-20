@@ -1,0 +1,59 @@
+#include <reg52.h>
+
+#define Stepper_Port P2			/* Define Stepper Motor Port */
+
+/* Function to provide delay of 1ms at 11.0592 MHz */
+void delay(unsigned int count)
+{
+    int i,j;
+    for(i=0; i<count; i++)
+			for(j=0; j<112; j++);
+}
+
+int main(void)
+{
+	int i,period;
+	period = 100;	/* Set period in between two steps of Stepper Motor */
+	while (1)
+	{
+		/* Rotate Stepper Motor clockwise with Half step sequence */
+		for(i=0; i<12; i++)
+		{
+			Stepper_Port = 0x09;
+			delay(period);
+			Stepper_Port = 0x08;
+			delay(period);
+			Stepper_Port = 0x0C;
+			delay(period);
+			Stepper_Port = 0x04;
+			delay(period);
+			Stepper_Port = 0x06;
+			delay(period);
+			Stepper_Port = 0x02;
+			delay(period);
+			Stepper_Port = 0x03;
+			delay(period);
+			Stepper_Port = 0x01;
+			delay(period);
+		}
+		/* last one step to acquire initial position */ 
+		Stepper_Port = 0x09;
+		delay(period);
+		delay(1000);
+		/* Rotate Stepper Motor Anticlockwise with Full step sequence */
+		for(i=0; i<12; i++)
+		{
+			Stepper_Port = 0x09;
+			delay(period);
+			Stepper_Port = 0x03;
+			delay(period);
+			Stepper_Port = 0x06;
+			delay(period);
+			Stepper_Port = 0x0C;
+			delay(period);
+		}
+		Stepper_Port = 0x09;
+		delay(period);
+		delay(1000);
+	}
+}
