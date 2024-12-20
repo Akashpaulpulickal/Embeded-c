@@ -1,0 +1,20 @@
+MOVR0,#20H;set source address 20H to R0
+MOVR1,#30H;set destination address 30H to R1
+
+MOVA,@R0;take the value from source to register A
+MOVR5,A; Move the value from A to R5
+MOVR4,#00H; Clear register R4 to store borrow
+
+INCR0; Point to the next location
+MOVA,@R0; take the value from source to register A
+MOVR3,A; store second byte
+MOVA,R5;get back the first operand
+SUBBA,R3; Subtract R3 from A
+       JNCSAVE
+       INCR4; Increment R4 to get borrow
+       MOVB,R4;Get borrow to register B
+       MOV@R1,B; Store the borrow first
+       INCR1; Increase R1 to point to the next address
+
+SAVE:  MOV@R1,A; Store the result
+HALT:  SJMP HALT ;Stop the program
